@@ -3,7 +3,7 @@ import app from "../../firebase/firebase.init";
 import { useState } from "react";
 
 const Login = () => {
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider()
 
@@ -20,16 +20,19 @@ const Login = () => {
             })
     }
 
-    const logOutHandler =() =>{
+    const logOutHandler = () => {
         signOut(auth)
-        .then(setUser(null))
-        .catch(error => console.log(error))
+            .then(setUser(null))
+            .catch(error => console.log(error))
     }
 
     return (
         <div>
-            <button onClick={loginHandler}>google login</button>
-            <button onClick={logOutHandler} >google signout</button>
+            {
+                user ?
+                    <button onClick={logOutHandler} >google signout</button> :
+                    <button onClick={loginHandler}>google login</button>
+            }
             {
                 user && <div>
 
