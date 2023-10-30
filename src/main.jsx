@@ -9,20 +9,28 @@ import {
 import Main from './components/Layout/Main.jsx';
 import Login from './components/Login/Login.jsx';
 import Register from './components/Register/Register.jsx';
+import Home from './components/Home/Home.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Main></Main>
+    element: <Main></Main>,
+    children: [
+      {
+        path: '/',
+        element: <Home></Home>
+      },
+      {
+        path: '/login',
+        element: <Login></Login>
+      },
+      {
+        path: '/register',
+        element: <Register></Register>
+      },
+    ]
   },
-  {
-    path: '/login',
-    element: <Login></Login>
-  },
-  {
-    path: '/register',
-    element: <Register></Register>
-  },
+
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(

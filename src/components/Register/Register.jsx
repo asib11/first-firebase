@@ -1,4 +1,4 @@
-// import { useState } from "react";
+import { useState } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import app from "../../firebase/firebase.init";
 
@@ -6,7 +6,8 @@ import app from "../../firebase/firebase.init";
 const auth = getAuth(app);
 
 const Register = () => {
-    // const [email, setEmail] = useState('');
+    const [registerError, setRegisterError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const handleRegister = (event) => {
         event.preventDefault();
@@ -18,8 +19,14 @@ const Register = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                setRegisterError('');
+                setSuccess('register successful');
+                event.target.reset();
             })
-            .catch(error => console.error(error))
+            .catch(error => {
+                setRegisterError(error.message)
+                setSuccess('');
+            })
 
     }
 
@@ -33,6 +40,8 @@ const Register = () => {
                 <br />
                 <input type="submit" value="Register" />
             </form>
+            <p style={{color: 'red'}}>{registerError}</p>
+            <p style={{color: 'green'}}>{success}</p>
         </div>
     );
 };
