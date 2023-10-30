@@ -11,21 +11,25 @@ const Register = () => {
 
     const handleRegister = (event) => {
         event.preventDefault();
+        setRegisterError('');
+        setSuccess('');
         const fieldEmail = event.target.email.value;
         const fieldPassword = event.target.password.value;
         console.log(fieldEmail, fieldPassword);
+        if(!/(?=.*[A-Z])/.test(fieldPassword)){
+            setRegisterError('password must be one uppercase');
+            return;
+        }
         //connect firebase
         createUserWithEmailAndPassword(auth, fieldEmail, fieldPassword)
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                setRegisterError('');
                 setSuccess('register successful');
                 event.target.reset();
             })
             .catch(error => {
-                setRegisterError(error.message)
-                setSuccess('');
+                setRegisterError(error.message);
             })
 
     }
